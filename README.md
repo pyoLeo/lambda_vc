@@ -25,3 +25,26 @@ sam deploy --guided
 
 s3에 버킷 자동생성된 모습
 ![alt text](image-1.png)
+
+## 템플릿 및 Cloudformation Stack 명 지정해서 람다 배포하기
+### package
+sam package \
+--template-file .aws-sam/build/template.yaml \
+--output-template-file [template name] \
+--s3-bucket [s3 bucket name] \
+--s3-prefix original
+
+### cp (s3에 template 파일 이름 지정해서 업로드)
+aws s3 cp [template name] [s3 uri]
+
+### deploy
+sam deploy \
+--template-file [template name] \
+--stack-name [stack name] \
+--capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+
+### rollback
+aws cloudformation update-stack \
+--stack-name [stack name] \
+--template-url [template uri]
+--capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND

@@ -36,6 +36,6 @@ def lambda_handler(event, context):
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "bye world",
+            "message": "bye world rollback",
         }),
     }

@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'lambda_vc
+
+  Sample SAM Template for lambda_vc
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+    LoggingConfig:
+      LogFormat: JSON
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-4ld5eup6pn6v/original/7d32491f18a17830822f8eb0743a0001
+      Handler: app.lambda_handler
+      Runtime: python3.14
+      Architectures:
+      - x86_64
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+    Metadata:
+      SamResourceId: HelloWorldFunction
+  ByeWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-4ld5eup6pn6v/original/40b60736b67ff82d2aaa24184022856b
+      Handler: app.lambda_handler
+      Runtime: python3.14
+      Architectures:
+      - x86_64
+      Events:
+        ByeWorld:
+          Type: Api
+          Properties:
+            Path: /bye
+            Method: get
+    Metadata:
+      SamResourceId: ByeWorldFunction
+Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/hello/
+  HelloWorldFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunction
+      - Arn
+  HelloWorldFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunctionRole
+      - Arn
